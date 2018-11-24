@@ -2,11 +2,11 @@
 __author__ = 'shyorange'
 __data__ = '2018-09-25'
 
-"""×Ô¼ºĞ´µÄÁ´±íÀà"""
+"""è‡ªå·±å†™çš„é“¾è¡¨ç±»"""
 
 class Node:
 
-    """½ÚµãÀà"""
+    """èŠ‚ç‚¹ç±»"""
     def __init__(self, data, next = None):
         self._data = data;
         self._next = next;
@@ -15,23 +15,23 @@ class Node:
 
 class ChainTable:
 
-    """Á´±íÀà"""
+    """é“¾è¡¨ç±»"""
     def __init__(self):
-        self._head = None; # ±íÊ¾Á´±íµÄÍ·½Úµã
-        self._length = 0; # ±íÊ¾Á´±íµÄ³¤¶È
-        self._index_next = 0; # ÓÃÓÚ_next()º¯ÊıÖĞµÄ¼ÆÊı
+        self._head = None; # è¡¨ç¤ºé“¾è¡¨çš„å¤´èŠ‚ç‚¹
+        self._length = 0; # è¡¨ç¤ºé“¾è¡¨çš„é•¿åº¦
+        self._index_next = 0; # ç”¨äº_next()å‡½æ•°ä¸­çš„è®¡æ•°
 
-    #  ÅĞ¶ÏÁ´±íÊÇ·ñÎª¿Õ
+    #  åˆ¤æ–­é“¾è¡¨æ˜¯å¦ä¸ºç©º
     def _isEmpty(self):
         return (self._length == 0);
 
-    # ÔÚÁ´±íÄ©Î²×·¼ÓÔªËØ
+    # åœ¨é“¾è¡¨æœ«å°¾è¿½åŠ å…ƒç´ 
     def _append(self, DataOrNode):
         """
-        :param DataOrNode: Êı¾İ»ò½ÚµãÀàĞÍµÄ¶ÔÏó
+        :param DataOrNode: æ•°æ®æˆ–èŠ‚ç‚¹ç±»å‹çš„å¯¹è±¡
         :return: None
         """
-        # ½«Êı¾İµÄÀàĞÍÍ³Ò»ÎªNodeÀà
+        # å°†æ•°æ®çš„ç±»å‹ç»Ÿä¸€ä¸ºNodeç±»
         item = None;
         if isinstance(DataOrNode, Node):
             item = DataOrNode;
@@ -41,30 +41,30 @@ class ChainTable:
             self._head = item;
             self._length += 1;
         else:
-            node = self._head; #  ´æ´¢µ±Ç°½Úµã
-            while node._next:  # Ö±µ½×îºóÒ»¸ö½Úµã
+            node = self._head; #  å­˜å‚¨å½“å‰èŠ‚ç‚¹
+            while node._next:  # ç›´åˆ°æœ€åä¸€ä¸ªèŠ‚ç‚¹
                 node = node._next;
             node._next = item;
             self._length += 1;
 
-    # ¸ù¾İË÷ÒıÉ¾³ıÊı¾İ
+    # æ ¹æ®ç´¢å¼•åˆ é™¤æ•°æ®
     def _delete(self, index):
         """
-        :param index: ÒªÉ¾³ıÔªËØµÄË÷Òı
+        :param index: è¦åˆ é™¤å…ƒç´ çš„ç´¢å¼•
         :return: None
         """
         if self._isEmpty():
-            print("Á´±íÎª¿Õ£¡£¡£¡");
+            print("é“¾è¡¨ä¸ºç©ºï¼ï¼ï¼");
             return;
         if index < 0 and index >= self._length:
-            raise IndexError("Ë÷Òı´íÎó£¡£¡£¡");
+            raise IndexError("ç´¢å¼•é”™è¯¯ï¼ï¼ï¼");
         if index == 0:
             self._head = self._head._next;
             self._length -= 1;
         else:
-            j = 0; # ¸¨Öú¶¨Î»
+            j = 0; # è¾…åŠ©å®šä½
             prev = self._head;
-            node = self._head;  # ±íÊ¾µ±Ç°½Úµã
+            node = self._head;  # è¡¨ç¤ºå½“å‰èŠ‚ç‚¹
             while node._next and j < index:
                 prev = node;
                 node = node._next;
@@ -73,33 +73,33 @@ class ChainTable:
                 prev._next = node._next;
                 self._length -= 1;
 
-    # ÔÚÖ¸¶¨Î»ÖÃ²åÈëÊı¾İ
+    # åœ¨æŒ‡å®šä½ç½®æ’å…¥æ•°æ®
     def _insert(self, index, DataOrNode):
         """
-        :param index: Òª²åÈëµÄÎ»ÖÃ
-        :param DataOrNode: Òª²åÈëµÄÊı¾İ
+        :param index: è¦æ’å…¥çš„ä½ç½®
+        :param DataOrNode: è¦æ’å…¥çš„æ•°æ®
         :return: None
         """
         if self._isEmpty():
-           print("Á´±íÎª¿Õ£¡£¡£¡");
+           print("é“¾è¡¨ä¸ºç©ºï¼ï¼ï¼");
            return;
         if index < 0 and index >= self._length:
-            raise IndexError("Ë÷Òı´íÎó£¡£¡£¡");
-        # ½«Êı¾İµÄÀàĞÍÍ³Ò»ÎªNodeÀà
+            raise IndexError("ç´¢å¼•é”™è¯¯ï¼ï¼ï¼");
+        # å°†æ•°æ®çš„ç±»å‹ç»Ÿä¸€ä¸ºNodeç±»
         item = None;
         if isinstance(DataOrNode, Node):
             item = DataOrNode;
         else:
             item = Node(DataOrNode);
-        if index == 0:  # Èç¹û²åÈëµÄÎ»ÖÃÎª0
+        if index == 0:  # å¦‚æœæ’å…¥çš„ä½ç½®ä¸º0
             item._next = self._head;
             self._head = item;
             self._length += 1;
         else:
-            j = 0; # ¸¨Öú¶¨Î»
-            prev = self._head; # ±íÊ¾µ±Ç°½ÚµãµÄÉÏÒ»½Úµã
-            node = self._head; # ±íÊ¾µ±Ç°½Úµã
-            while node._next and j < index: # ±£Ö¤µ±Ç°½Úµã²»ÊÇ×îºóÒ»¸ö½Úµã
+            j = 0; # è¾…åŠ©å®šä½
+            prev = self._head; # è¡¨ç¤ºå½“å‰èŠ‚ç‚¹çš„ä¸Šä¸€èŠ‚ç‚¹
+            node = self._head; # è¡¨ç¤ºå½“å‰èŠ‚ç‚¹
+            while node._next and j < index: # ä¿è¯å½“å‰èŠ‚ç‚¹ä¸æ˜¯æœ€åä¸€ä¸ªèŠ‚ç‚¹
                 prev = node;
                 node = node._next;
                 j += 1;
@@ -108,22 +108,22 @@ class ChainTable:
                 item._next = node;
                 self._length += 1;
 
-    # ĞŞ¸ÄÄ³Ò»Ë÷ÒıµÄÔªËØÖµ
+    # ä¿®æ”¹æŸä¸€ç´¢å¼•çš„å…ƒç´ å€¼
     def _update(self, index, newData):
         """
-        :param index: ÒªĞŞ¸ÄÔªËØµÄË÷Òı
-        :param newData: ĞÂµÄÔªËØÖµ
+        :param index: è¦ä¿®æ”¹å…ƒç´ çš„ç´¢å¼•
+        :param newData: æ–°çš„å…ƒç´ å€¼
         :return: None
         """
         if self._isEmpty():
-           print("Á´±íÎª¿Õ£¡£¡£¡");
+           print("é“¾è¡¨ä¸ºç©ºï¼ï¼ï¼");
            return;
         if index < 0 and index >= self._length:
-            raise IndexError("Ë÷Òı´íÎó£¡£¡£¡");
+            raise IndexError("ç´¢å¼•é”™è¯¯ï¼ï¼ï¼");
         if index == 0:
             self._head._data = newData;
         else:
-            j = 0; # ¸¨Öú¶¨Î»
+            j = 0; # è¾…åŠ©å®šä½
             node = self._head;
             while node._next and j < index:
                 node = node._next;
@@ -131,35 +131,35 @@ class ChainTable:
             if j == index:
                 node._data = newData;
 
-    # ¸ù¾İË÷ÒıÀ´²éÕÒ½ÚµãµÄÊı¾İ
+    # æ ¹æ®ç´¢å¼•æ¥æŸ¥æ‰¾èŠ‚ç‚¹çš„æ•°æ®
     def _getItem(self, index):
         """
-        :param index: Òª²éÕÒµÄË÷Òı
-        :return: Item: ¸ÃË÷Òı¶ÔÓ¦µÄ½Úµã
+        :param index: è¦æŸ¥æ‰¾çš„ç´¢å¼•
+        :return: Item: è¯¥ç´¢å¼•å¯¹åº”çš„èŠ‚ç‚¹
         """
         if self._isEmpty():
-            print("Á´±íÎª¿Õ£¡£¡£¡");
+            print("é“¾è¡¨ä¸ºç©ºï¼ï¼ï¼");
             return;
         if index < 0 or index >= self._length:
-            raise IndexError("Ë÷Òı´íÎó£¡£¡£¡");
-        j = 0; # ¸¨Öú¶¨Î»
-        node = self._head; # ±íÊ¾µ±Ç°½Úµã
+            raise IndexError("ç´¢å¼•é”™è¯¯ï¼ï¼ï¼");
+        j = 0; # è¾…åŠ©å®šä½
+        node = self._head; # è¡¨ç¤ºå½“å‰èŠ‚ç‚¹
         while node._next and j < index:
             node = node._next;
             j += 1;
         return node;
 
-    # ¸ù¾İÔªËØÕÒµ½¸ÄÔªËØµÄË÷Òı£¬ Ö»·µ»ØµÚÒ»¸öÏàÍ¬ÔªËØµÄÎ»ÖÃ
+    # æ ¹æ®å…ƒç´ æ‰¾åˆ°æ”¹å…ƒç´ çš„ç´¢å¼•ï¼Œ åªè¿”å›ç¬¬ä¸€ä¸ªç›¸åŒå…ƒç´ çš„ä½ç½®
     def _getIndex(self, data):
         """
-        :param data:Òª²éÕÒÎ»ÖÃµÄÔªËØ
-        :return: Index: ¸ÃÔªËØÔÚÁ´±íÖĞµÄÎ»ÖÃ
+        :param data:è¦æŸ¥æ‰¾ä½ç½®çš„å…ƒç´ 
+        :return: Index: è¯¥å…ƒç´ åœ¨é“¾è¡¨ä¸­çš„ä½ç½®
         """
         if self._isEmpty():
-            print("Á´±íÎª¿Õ£¡£¡£¡");
+            print("é“¾è¡¨ä¸ºç©ºï¼ï¼ï¼");
             return;
-        j = 0; # ¸¨Öú¶¨Î»
-        node = self._head; # ±íÊ¾µ±Ç°½Úµã
+        j = 0; # è¾…åŠ©å®šä½
+        node = self._head; # è¡¨ç¤ºå½“å‰èŠ‚ç‚¹
         while node:
             if node._data == data:
                 return j;
@@ -169,7 +169,7 @@ class ChainTable:
         if j == self._length:
             return None;
 
-    #Çå¿ÕÁ´±íµÄ·½·¨
+    #æ¸…ç©ºé“¾è¡¨çš„æ–¹æ³•
     def _clear(self):
         """
         :return: None
@@ -177,29 +177,29 @@ class ChainTable:
         self._head = None;
         self._length = 0;
 
-    # Ïëµü´úÆ÷Ò»ÑùÖğ¸ö·µ»ØÁ´±íÖĞµÄÔªËØ
+    # åƒç”Ÿæˆå™¨ä¸€æ ·é€ä¸ªè¿”å›é“¾è¡¨ä¸­çš„å…ƒç´ 
     def _next(self):
         """
-        :return: every_data: Á´±íÖĞµÄ½Úµã
+        :return: every_data: é“¾è¡¨ä¸­çš„èŠ‚ç‚¹
         """
         every_data = self._getItem(self._index_next);
         self._index_next += 1;
-        return every_data;
+        yield every_data;
 
-    #  Ê¹ÓÃ len(ChainTable) Ê±·µ»ØÁ´±íµÄ³¤¶È
+    #  ä½¿ç”¨ len(ChainTable) æ—¶è¿”å›é“¾è¡¨çš„é•¿åº¦
     def __len__(self):
         return self._length;
 
-    # ¸ù¾İ¶ÔÏóÊä³öÔªËØ
+    # æ ¹æ®å¯¹è±¡è¾“å‡ºå…ƒç´ 
     def __repr__(self):
         """
         :return:None
         """
         if self._isEmpty():
-            print("Á´±íÎª¿Õ£¡£¡£¡");
+            print("é“¾è¡¨ä¸ºç©ºï¼ï¼ï¼");
             return;
         result = "";
-        j = 0; # ¸¨Öú¶¨Î»
+        j = 0; # è¾…åŠ©å®šä½
         while j < self._length:
             result += str(self._getItem(j)) + " ";
             j += 1;
