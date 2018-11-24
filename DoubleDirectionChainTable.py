@@ -3,18 +3,18 @@ __author__ = 'shyorange'
 __data__ = '2018-09-26'
 
 """
-Ë«ÏòÁ´±í£º
-    ¢Ù: Ã¿¸ö½ÚµãÓĞÁ½¸öÖ¸ÕëÓò£¬¼´£ºÇ°ÇıºÍºó¼Ì
-    ¢Ú£º¿É´ÓÍ·½Úµã¿ªÊ¼±éÀú£¬Ò²¿É´ÓÎ²½Úµã¿ªÊ¼±éÀú
-    ?£º¿ÉÒÔ½«Î²½ÚµãµÄºó¼ÌÖ¸ÏòÍ·½ÚµãµÄÇ°Çı
+åŒå‘é“¾è¡¨ï¼š
+    â‘ : æ¯ä¸ªèŠ‚ç‚¹æœ‰ä¸¤ä¸ªæŒ‡é’ˆåŸŸï¼Œå³ï¼šå‰é©±å’Œåç»§
+    â‘¡ï¼šå¯ä»å¤´èŠ‚ç‚¹å¼€å§‹éå†ï¼Œä¹Ÿå¯ä»å°¾èŠ‚ç‚¹å¼€å§‹éå†
+    ?ï¼šå¯ä»¥å°†å°¾èŠ‚ç‚¹çš„åç»§æŒ‡å‘å¤´èŠ‚ç‚¹çš„å‰é©±
 """
 class Node:
 
     def __init__(self, data, prev = None, next = None):
         """
-        :param data: Êı¾İÓòÖĞµÄÊı¾İ
-        :param prev: Ö¸ÏòÇ°Çı½Úµã
-        :param next: Ö¸Ïòºó¼Ì½Úµã
+        :param data: æ•°æ®åŸŸä¸­çš„æ•°æ®
+        :param prev: æŒ‡å‘å‰é©±èŠ‚ç‚¹
+        :param next: æŒ‡å‘åç»§èŠ‚ç‚¹
         """
         self._data = data;
         self._prev = prev;
@@ -24,45 +24,45 @@ class Node:
 
 class DDChainTable:
     def __init__(self):
-        self._length = 0;  # ±íÊ¾Á´±í³¤¶È
-        self._head = None; # ±íÊ¾Í·²¿½Úµã
-        self._tail = None; # ±íÊ¾Î²²¿½Úµã
-        self._index_next = 0; # µü´úÆ÷ÖĞ¼ÆÊı±äÁ¿
+        self._length = 0;  # è¡¨ç¤ºé“¾è¡¨é•¿åº¦
+        self._head = None; # è¡¨ç¤ºå¤´éƒ¨èŠ‚ç‚¹
+        self._tail = None; # è¡¨ç¤ºå°¾éƒ¨èŠ‚ç‚¹
+        self._index_next = 0; # ç”Ÿæˆå™¨ä¸­è®¡æ•°å˜é‡
 
-    #  ÅĞ¶ÏÁ´±íÊÇ·ñÎª¿Õ
+    #  åˆ¤æ–­é“¾è¡¨æ˜¯å¦ä¸ºç©º
     def _isEmpty(self):
         """
         :return:True|False
         """
         if self._length == 0:
-            print("Á´±íÎª¿Õ£¡£¡£¡");
+            print("é“¾è¡¨ä¸ºç©ºï¼ï¼ï¼");
             return True;
         else:
             return False;
 
-    #  ÅĞ¶ÏÓÃ»§´«ÈëµÄË÷ÒıÊÇ·ñÔ½½ç
+    #  åˆ¤æ–­ç”¨æˆ·ä¼ å…¥çš„ç´¢å¼•æ˜¯å¦è¶Šç•Œ
     def _isIndexRight(self, index):
         if index < 0:
             if abs(index) > self._length:
-                raise IndexError("Ë÷ÒıÔ½½ç£¡£¡£¡");
+                raise IndexError("ç´¢å¼•è¶Šç•Œï¼ï¼ï¼");
         else:
             if index >= self._length:
-                raise IndexError("Ë÷ÒıÔ½½ç£¡£¡£¡");
+                raise IndexError("ç´¢å¼•è¶Šç•Œï¼ï¼ï¼");
 
-    # ÍùÁ´±íÄ©Î²Ìí¼ÓÔªËØ
+    # å¾€é“¾è¡¨æœ«å°¾æ·»åŠ å…ƒç´ 
     def _append(self, DataOrNode):
         """
-        :param DataOrNode: Êı¾İ»ò½ÚµãÀàµÄ¶ÔÏó
+        :param DataOrNode: æ•°æ®æˆ–èŠ‚ç‚¹ç±»çš„å¯¹è±¡
         :return: None
         """
         item = None;
-        #  ½«Êı¾İ°ü×°ÎªNodeÀàĞÍµÄ¶ÔÏó
+        #  å°†æ•°æ®åŒ…è£…ä¸ºNodeç±»å‹çš„å¯¹è±¡
         if isinstance(DataOrNode, Node):
             item = DataOrNode;
         else:
             item = Node(DataOrNode);
         if not self._head:
-            #  Èç¹ûÍ·½ÚµãÎª¿ÕËµÃ÷Á´±íÖĞÎŞÊı¾İ
+            #  å¦‚æœå¤´èŠ‚ç‚¹ä¸ºç©ºè¯´æ˜é“¾è¡¨ä¸­æ— æ•°æ®
             self._head = item;
             self._tail = item;
             self._length += 1;
@@ -75,10 +75,10 @@ class DDChainTable:
             self._tail = item;
             self._length += 1;
 
-    #  ¸ù¾İË÷ÒıÉ¾³ı½Úµã
+    #  æ ¹æ®ç´¢å¼•åˆ é™¤èŠ‚ç‚¹
     def _delete(self, index):
         """
-        :param index:ÒªÉ¾³ı½ÚµãµÄË÷Òı¡£Îª¸º±íÊ¾µ¹×Å²éÕÒ¡£
+        :param index:è¦åˆ é™¤èŠ‚ç‚¹çš„ç´¢å¼•ã€‚ä¸ºè´Ÿè¡¨ç¤ºå€’ç€æŸ¥æ‰¾ã€‚
         :return: None
         """
         if self._isEmpty():
@@ -89,12 +89,12 @@ class DDChainTable:
             self._head._prev = None;
             self._length -= 1;
         elif index > 0:
-            j = 0; # ¸¨Öú¶¨Î»
-            node = self._head; # ±íÊ¾µ±Ç°½Úµã
+            j = 0; # è¾…åŠ©å®šä½
+            node = self._head; # è¡¨ç¤ºå½“å‰èŠ‚ç‚¹
             while node._next and j < index:
                 node = node._next;
                 j += 1;
-            #  ĞŞ¸Äµ±Ç°Ç°Çı½ÚµãºÍºó¼Ì½ÚµãµÄÖ¸Ïò
+            #  ä¿®æ”¹å½“å‰å‰é©±èŠ‚ç‚¹å’Œåç»§èŠ‚ç‚¹çš„æŒ‡å‘
             node._prev._next = node._next;
             if node._next:
                 node._next._prev = node._prev;
@@ -107,7 +107,7 @@ class DDChainTable:
                 self._tail = self._tail._prev;
                 self._length -= 1;
             else:
-                j = 1; # ¸¨Öú¶¨Î»
+                j = 1; # è¾…åŠ©å®šä½
                 node =self._tail;
                 while node._prev and j < abs(index):
                     node = node._prev;
@@ -119,17 +119,17 @@ class DDChainTable:
                     self._head = node._next;
                 self._length -= 1;
 
-    #  ¸ù¾İË÷Òı·µ»Ø½Úµã
+    #  æ ¹æ®ç´¢å¼•è¿”å›èŠ‚ç‚¹
     def _getItem(self, index):
         """
-        :param index: Òª²éÕÒ½ÚµãµÄË÷Òı
+        :param index: è¦æŸ¥æ‰¾èŠ‚ç‚¹çš„ç´¢å¼•
         :return: None
         """
         if self._isEmpty():
             return ;
         self._isIndexRight(index);
         if index < 0:
-            j = 1; # ¸¨Öú¶¨Î»
+            j = 1; # è¾…åŠ©å®šä½
             node = self._tail;
             while node:
                 if j == abs(index):
@@ -139,7 +139,7 @@ class DDChainTable:
                     j += 1;
             return None;
         else:
-            j = 0; # ¸¨Öú¶¨Î»
+            j = 0; # è¾…åŠ©å®šä½
             node = self._head;
             while node:
                 if j == index:
@@ -149,16 +149,16 @@ class DDChainTable:
                     j += 1;
             return None;
 
-    #  ¸ù¾İ½ÚµãÖµ·µ»Ø¸Ã½ÚµãµÄË÷Òı
+    #  æ ¹æ®èŠ‚ç‚¹å€¼è¿”å›è¯¥èŠ‚ç‚¹çš„ç´¢å¼•
     def _getIndex(self, data):
         """
-        :param data: Òª²éÕÒÎ»ÖÃµÄ½ÚµãÊı¾İ
-        :return: index £º¸Ã½ÚµãµÄË÷Òı£¨-1£º±íÊ¾Î´ÕÒµ½£©
+        :param data: è¦æŸ¥æ‰¾ä½ç½®çš„èŠ‚ç‚¹æ•°æ®
+        :return: index ï¼šè¯¥èŠ‚ç‚¹çš„ç´¢å¼•ï¼ˆ-1ï¼šè¡¨ç¤ºæœªæ‰¾åˆ°ï¼‰
         """
         if self._isEmpty():
             return ;
-        j = 0; # ¸¨Öú¶¨Î»
-        node = self._head; # ±íÊ¾µ±Ç°½Úµã
+        j = 0; # è¾…åŠ©å®šä½
+        node = self._head; # è¡¨ç¤ºå½“å‰èŠ‚ç‚¹
         while node:
             if node._data == data:
                 return j;
@@ -167,34 +167,34 @@ class DDChainTable:
                 j += 1;
         return -1;
 
-    #  ĞŞ¸ÄÖ¸¶¨Ë÷Òı½ÚµãµÄÖµ
+    #  ä¿®æ”¹æŒ‡å®šç´¢å¼•èŠ‚ç‚¹çš„å€¼
     def _update(self, index, data):
         """
-        :param index: ÒªĞŞ¸Ä½ÚµãµÄË÷Òı
-        :param data: ĞŞ¸ÄºóµÄÖµ
+        :param index: è¦ä¿®æ”¹èŠ‚ç‚¹çš„ç´¢å¼•
+        :param data: ä¿®æ”¹åçš„å€¼
         :return: None
         """
         if self._isEmpty():
             return;
         self._isIndexRight(index);
-        # ¿ªÊ¼ĞŞ¸Ä
+        # å¼€å§‹ä¿®æ”¹
         node = self._getItem(index);
         if node:
             node._data = data;
         else:
-            print("Î´ÕÒµ½¸ÃË÷Òı¶ÔÓ¦µÄ½Úµã¡£");
+            print("æœªæ‰¾åˆ°è¯¥ç´¢å¼•å¯¹åº”çš„èŠ‚ç‚¹ã€‚");
 
-    #  ÔÚÖ¸¶¨Î»ÖÃ²åÈë½Úµã
+    #  åœ¨æŒ‡å®šä½ç½®æ’å…¥èŠ‚ç‚¹
     def _insert(self, index, DataOrNode):
         """
-        :param index: Î»ÖÃ
-        :param DataOrNode: Êı¾İ
+        :param index: ä½ç½®
+        :param DataOrNode: æ•°æ®
         :return: None
         """
         if self._isEmpty():
             return ;
         self._isIndexRight(index);
-        #  °ü×°Êı¾İ
+        #  åŒ…è£…æ•°æ®
         item = None;
         if isinstance(DataOrNode, Node):
             item = DataOrNode;
@@ -206,7 +206,7 @@ class DDChainTable:
             self._head = item;
             self._length += 1;
         elif index > 0:
-            j = 0; # ¸¨Öú¶¨Î»
+            j = 0; # è¾…åŠ©å®šä½
             node = self._head;
             while node._next and j < index:
                 node = node._next;
@@ -217,7 +217,7 @@ class DDChainTable:
             node._prev = item;
             self._length += 1;
         else:
-            j = 1; # ¸¨Öú¶¨Î»
+            j = 1; # è¾…åŠ©å®šä½
             node = self._tail;
             while node._prev and j < abs(index):
                 node = node._prev;
@@ -231,21 +231,21 @@ class DDChainTable:
             node._next = item;
             self._length += 1;
 
-    #   Ä£·ÂÒ»¸öµü´úÆ÷£¬Ã¿´Îµ÷ÓÃ¸Ã·½·¨£¬Öğ¸ö·µ»Ø½Úµã
+    #   æ¨¡ä»¿ä¸€ä¸ªç”Ÿæˆå™¨ï¼Œæ¯æ¬¡è°ƒç”¨è¯¥æ–¹æ³•ï¼Œé€ä¸ªè¿”å›èŠ‚ç‚¹
     def _next(self):
         """
-        :return: ½Úµã
+        :return: èŠ‚ç‚¹
         """
         if self._index_next < self._length:
             every_node = self._getItem(self._index_next);
             self._index_next += 1;
-            return (every_node);
+            retrun (every_node);
         return None;
 
-    #  µ±Êä³ö¶ÔÏóÊ±£¬Ö±½ÓÊä³öÁ´±íÖĞµÄËùÓĞÊı¾İ
+    #  å½“è¾“å‡ºå¯¹è±¡æ—¶ï¼Œç›´æ¥è¾“å‡ºé“¾è¡¨ä¸­çš„æ‰€æœ‰æ•°æ®
     def __repr__(self):
         if self._length == 0:
-            return("Á´±íÎª¿Õ£¡£¡£¡");
+            return("é“¾è¡¨ä¸ºç©ºï¼ï¼ï¼");
         node = self._head;
         result = "";
         while node:
@@ -253,16 +253,16 @@ class DDChainTable:
             node = node._next;
         return result;
 
-    #  µ±len(¶ÔÏó)Ê±£¬·µ»ØÁ´±í³¤¶È
+    #  å½“len(å¯¹è±¡)æ—¶ï¼Œè¿”å›é“¾è¡¨é•¿åº¦
     def __len__(self):
         return (self._length);
 
 if __name__ == '__main__':
     chain = DDChainTable();
     print(chain);
-    chain._append("ÄãºÃ");
+    chain._append("ä½ å¥½");
     chain._append("a");
-    chain._append("ÊÀ½ç");
+    chain._append("ä¸–ç•Œ");
     chain._append("123");
     chain._append("###");
     print(chain);
