@@ -10,8 +10,9 @@ from lxml import etree;
 class  ProiexsPool:
     @staticmethod
     def _get_proiexs():
-        # 存放所有ip的列表
-        ips = [];
+        """
+        从代理ip网站获取免费ip
+        """
         # 首先爬取代理ip的网站（只爬取前两页）
         for i in range(1,3):
             html = requests.get("https://www.kuaidaili.com/free/inha/"+str(i)+"/",headers={
@@ -20,12 +21,9 @@ class  ProiexsPool:
             # 取出ip和协议类型
             html_tree = etree.HTML(html);
             tr_ips = html_tree.xpath("//tbody/tr");
-            # print(tr_ips);
             for index,tr in enumerate(tr_ips):
                 xieyi = tr.xpath("//td[4]/text()")[index];
                 ip = tr.xpath("//td[1]/text()")[index]+":"+tr.xpath("//td[2]/text()")[index];
-                # print(type(ip));
-                # port = ;
                 full_ip = {xieyi : ip};
                 # 测试ip是否可用
                 if ProiexsPool._check_ip(full_ip):
@@ -33,10 +31,8 @@ class  ProiexsPool:
                     if ProiexsPool._select_ip_from_database(ip):
                         # 将所有可用的ip存入数据库
                         ProiexsPool._save_ip_to_database(xieyi,ip);
-            if i == 2:
-                break;
-            else:
-                time.sleep(5);
+            # 暂停5秒，防止网站反爬
+            time.sleep(5);
 
     @staticmethod
     def _check_ip(ip):
@@ -64,7 +60,7 @@ class  ProiexsPool:
         """
         将ip存入数据库
         :param xieyi: 代理ip的协议（https，http，socket等）
-        :param ip: 一个ip代理（字典类型）
+        :param ip: 一个代理ip（字典类型）
         :return: None
         """
         conn = sqlite3.connect("ProxiesPool.db");
