@@ -1,4 +1,4 @@
-# -*- coding: gbk -*-
+# -*- coding: utf-8 -*-
 __author__ = 'shyorange'
 __data__ = '2018-09-26'
 
