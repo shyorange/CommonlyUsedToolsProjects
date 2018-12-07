@@ -6,18 +6,18 @@ import random;
 import sqlite3;
 import requests;
 from lxml import etree;
-"""»ñÈ¡Ãâ·Ñ´úÀíipµÄ¹¤¾ß"""
+"""è·å–å…è´¹ä»£ç†ipçš„å·¥å…·"""
 class  ProiexsPool:
     @staticmethod
     def _get_proiexs():
-        # ´æ·ÅËùÓĞipµÄÁĞ±í
+        # å­˜æ”¾æ‰€æœ‰ipçš„åˆ—è¡¨
         ips = [];
-        # Ê×ÏÈÅÀÈ¡´úÀíipµÄÍøÕ¾£¨Ö»ÅÀÈ¡Ç°Á½Ò³£©
+        # é¦–å…ˆçˆ¬å–ä»£ç†ipçš„ç½‘ç«™ï¼ˆåªçˆ¬å–å‰ä¸¤é¡µï¼‰
         for i in range(1,3):
             html = requests.get("https://www.kuaidaili.com/free/inha/"+str(i)+"/",headers={
                 "User-Agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:52.0) Gecko/20100101 Firefox/52.0"
             }).text;
-            # È¡³öipºÍĞ­ÒéÀàĞÍ
+            # å–å‡ºipå’Œåè®®ç±»å‹
             html_tree = etree.HTML(html);
             tr_ips = html_tree.xpath("//tbody/tr");
             # print(tr_ips);
@@ -27,11 +27,11 @@ class  ProiexsPool:
                 # print(type(ip));
                 # port = ;
                 full_ip = {xieyi : ip};
-                # ²âÊÔipÊÇ·ñ¿ÉÓÃ
+                # æµ‹è¯•ipæ˜¯å¦å¯ç”¨
                 if ProiexsPool._check_ip(full_ip):
-                    # ²é¿´Êı¾İ¿âÖĞÊÇ·ñ´æÔÚ¸Ã×éip
+                    # æŸ¥çœ‹æ•°æ®åº“ä¸­æ˜¯å¦å­˜åœ¨è¯¥ç»„ip
                     if ProiexsPool._select_ip_from_database(ip):
-                        # ½«ËùÓĞ¿ÉÓÃµÄip´æÈëÊı¾İ¿â
+                        # å°†æ‰€æœ‰å¯ç”¨çš„ipå­˜å…¥æ•°æ®åº“
                         ProiexsPool._save_ip_to_database(xieyi,ip);
             if i == 2:
                 break;
@@ -41,12 +41,12 @@ class  ProiexsPool:
     @staticmethod
     def _check_ip(ip):
         """
-        ¼ì²éipÊÇ·ñ¿ÉÓÃµÄ·½·¨
-        :param ip:Òª¼ì²éµÄip
-        :return: True»òÕßFalse
+        æ£€æŸ¥ipæ˜¯å¦å¯ç”¨çš„æ–¹æ³•
+        :param ip:è¦æ£€æŸ¥çš„ip
+        :return: Trueæˆ–è€…False
         """
         try:
-            # print("ÕıÔÚ¼ì²éip£º{}".format(ip));
+            # print("æ­£åœ¨æ£€æŸ¥ipï¼š{}".format(ip));
             html = requests.get("http://bj.58.com/chuzu/?PGTID=0d100000-0000-15df-5f6f-34fb3bfd7994&ClickID=3",headers={
                 "User-Agent":"Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:52.0) Gecko/20100101 Firefox/52.0"
             },proxies=ip,timeout = 3);
@@ -62,9 +62,9 @@ class  ProiexsPool:
     @staticmethod
     def _save_ip_to_database(xieyi,ip):
         """
-        ½«ip´æÈëÊı¾İ¿â
-        :param xieyi: ´úÀíipµÄĞ­Òé£¨https£¬http£¬socketµÈ£©
-        :param ip: Ò»¸öip´úÀí£¨×ÖµäÀàĞÍ£©
+        å°†ipå­˜å…¥æ•°æ®åº“
+        :param xieyi: ä»£ç†ipçš„åè®®ï¼ˆhttpsï¼Œhttpï¼Œsocketç­‰ï¼‰
+        :param ip: ä¸€ä¸ªipä»£ç†ï¼ˆå­—å…¸ç±»å‹ï¼‰
         :return: None
         """
         conn = sqlite3.connect("ProxiesPool.db");
@@ -78,9 +78,9 @@ class  ProiexsPool:
     @staticmethod
     def _select_ip_from_database(ip):
         """
-        ¸ù¾İ´«ÈëµÄip²éÑ¯£¬¿´Êı¾İ¿âÖĞÊÇ·ñÓĞ¸Ãip£¬¾ö¶¨ÊÇ·ñ±£´æ¸Ãip
-        :param ip: Òª²éÑ¯µÄip
-        :return: True»òFalse
+        æ ¹æ®ä¼ å…¥çš„ipæŸ¥è¯¢ï¼Œçœ‹æ•°æ®åº“ä¸­æ˜¯å¦æœ‰è¯¥ipï¼Œå†³å®šæ˜¯å¦ä¿å­˜è¯¥ip
+        :param ip: è¦æŸ¥è¯¢çš„ip
+        :return: Trueæˆ–False
         """
         try:
             conn = sqlite3.connect("ProxiesPool.db");
@@ -102,8 +102,8 @@ class  ProiexsPool:
     @staticmethod
     def _delete_ip_from_db(ip):
         """
-        ¸ù¾İ´«ÈëµÄipÉ¾³ıÊ§Ğ§µÄipÊı¾İ
-        :param ip: ÒªÉ¾³ıµÄip
+        æ ¹æ®ä¼ å…¥çš„ipåˆ é™¤å¤±æ•ˆçš„ipæ•°æ®
+        :param ip: è¦åˆ é™¤çš„ip
         :return: None
         """
         conn = sqlite3.connect("ProxiesPool.db");
@@ -113,12 +113,12 @@ class  ProiexsPool:
         conn.commit();
         cursor.close();
         conn.close();
-        print("³É¹¦É¾³ıÊ§Ğ§´úÀíip£º{}.....".format(ip));
+        print("æˆåŠŸåˆ é™¤å¤±æ•ˆä»£ç†ipï¼š{}.....".format(ip));
 
     @staticmethod
     def _get_random_ip():
         """
-        Ëæ»ú»ñµÃÒ»¸öip£¬²¢¼ì²âÊı¾İ¿âµÄipÊıÁ¿
+        éšæœºè·å¾—ä¸€ä¸ªipï¼Œå¹¶æ£€æµ‹æ•°æ®åº“çš„ipæ•°é‡
         :return: None
         """
         conn = sqlite3.connect("ProxiesPool.db");
@@ -126,9 +126,9 @@ class  ProiexsPool:
         cursor.execute("create table if not exists proxies(xieyi varchar,ip varchar)");
         counts = cursor.execute("select count(*) from proxies")
         if counts.__next__()[0] < 5:
-            # Èç¹ûÊı¾İ¿âÀïµÄipÊıÁ¿Ğ¡ÓÚ5¸ö£¬ÔòÍùÊı¾İ¿âÖĞÖØĞÂÌîÈëÊı¾İ
+            # å¦‚æœæ•°æ®åº“é‡Œçš„ipæ•°é‡å°äº5ä¸ªï¼Œåˆ™å¾€æ•°æ®åº“ä¸­é‡æ–°å¡«å…¥æ•°æ®
             ProiexsPool._get_proiexs();
-        # »ñµÃÊı¾İ¿âÖĞËùÓĞIp
+        # è·å¾—æ•°æ®åº“ä¸­æ‰€æœ‰Ip
         proxies = cursor.execute("select * from proxies");
         ips = [];
         for xieyi,ip in proxies:
@@ -139,4 +139,10 @@ class  ProiexsPool:
         return random.choice(ips);
 
 if __name__ == '__main__':
-    ProiexsPool._get_proiexs();
+    pool = ProiexsPool();
+    ## å¼€å§‹çˆ¬å–ä»£ç†ipç½‘ç«™
+    pool._get_proiexs();
+    ## ä»æ•°æ®åº“ä¸­è·å–éšæœºip
+    ip = pool._get_random_ip();
+    print(ip);
+    
