@@ -186,7 +186,5 @@ class  ProiexsPool:
         conn.close();
         return random.choice(ips);
 
-
-
 if __name__ == '__main__':
     print(ProiexsPool._get_random_ip());
